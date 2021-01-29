@@ -15,7 +15,7 @@ exports.all = () => {
 };
 
 exports.delete = id => {
-  const index = data.findIndex(item => item.id === id);
+  const index = data.findIndex(item => item.id == id);
 
   data.splice(index, 1);
   return this.all();
