@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+  -webkit-user-select: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font: caption;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  background-color: dodgerblue;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  font-size: 20px;
+  outline: none;
+}
+
+input {
+  border-radius: 5px;
+  font-size: 20px;
+  border: 1px solid silver;
+  padding: 0 10px;
+}
+
+header {
+  background-color: lightgray;
+  display: flex;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid silver;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+#button-show-modal {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+#button-delete {
+  position: fixed;
+  bottom: 80px;
+  right: 30px;
+  height: 50px;
+  width: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  border-radius: 50%;
+  background-color: #f02929;
+  display: none;
+}
+
+main {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+#no-items {
+  font-weight: bold;
+  color: silver;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 100px;
+  z-index: -1;
+}
+
+#modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-content: stretch;
+  padding: 15px;
+  display: none;
+}
+
+#modal form {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+#modal button {
+  padding: 10px;
+  margin-left: 15px;
+}
+
+#input {
+  flex: 1;
+  padding: 10px;
+}
+
+#button-close-modal {
+  background-color: white;
+  color: black;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  border-bottom: lightgray 2px solid;
+  background-color: #fafafa;
+  padding: 10px;
+  border-left: 10px solid lightgray;
+  -webkit-user-select: none;
+}
+
+.item.selected {
+  border-left-color: dodgerblue;
+}
+
+.item:hover {
+  background-color: #eee;
+}
+
+.item h2 {
+  flex: 1;
+}
