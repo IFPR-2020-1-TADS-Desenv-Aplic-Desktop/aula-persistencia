@@ -1,3 +1,4 @@
+const { ipcRenderer } = require('electron');
 const database = require('./database');
 
 const modal = document.querySelector('#modal');
@@ -44,10 +45,14 @@ form.addEventListener('submit', e => {
   save(inputDescription.value);
 });
 
-buttonDelete.addEventListener('click', () => {
+const remove = () => {
   const selectedItems = document.querySelectorAll('.item.selected');
   selectedItems.forEach(itemNode => database.delete(itemNode.dataset.id));
   render();
+};
+
+buttonDelete.addEventListener('click', () => {
+  remove();
 });
 
 const render = () => {
@@ -90,4 +95,14 @@ const render = () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   render();
+});
+
+// IPC
+
+ipcRenderer.on('menu-add-click', () => {
+  showModal();
+});
+
+ipcRenderer.on('menu-delete-click', () => {
+  remove();
 });

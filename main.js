@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const { appMenu } = require('./menu');
 
 let mainWindow;
 
@@ -13,7 +14,7 @@ function createWindow() {
 
   mainWindow.loadFile('renderer/app.html');
 
-  state.manage(mainWindow);
+  appMenu(mainWindow);
 
   mainWindow.on('closed', () => {
     mainWindow = null;
