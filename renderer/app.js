@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+const fs = require('fs').promises;
 const database = require('./database');
 const menu = require('./menu');
 
@@ -121,6 +122,8 @@ const render = () => {
 
     buttonNode.addEventListener('click', e => {
       e.cancelBubble = true;
+
+      saveToFile(item, buttonNode);
     });
   });
   renderDelete();
@@ -139,5 +142,17 @@ ipcRenderer.on('menu-add-click', () => {
 ipcRenderer.on('menu-delete-click', () => {
   remove();
 });
+
+const saveToFile = async ({ id, description }, button) => {
+  const path = await ipcRenderer.invoke('path-get', 'userData');
+  const fileName = `${path}/${id}.txt`;
+
+  button.classList.add('done');
+  button.innerText = 'Saving...';
+
+  await fs.writeFile(fileName, description, 'utf8');
+
+  button.innerText = 'Saved to File';
+};
 
 menu.enableMenu({ disable: ['delete'] });

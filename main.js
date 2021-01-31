@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const { appMenu } = require('./menu');
 
 let mainWindow;
@@ -29,4 +29,8 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (mainWindow === null) createWindow();
+});
+
+ipcMain.handle('path-get', (e, dir) => {
+  return app.getPath(dir);
 });
