@@ -85,16 +85,16 @@ const render = () => {
     const descriptionNode = document.createElement('h2');
     descriptionNode.innerText = item.description;
 
-    const buttonNode = document.createElement('button');
-    buttonNode.setAttribute('class', 'button-save');
-    buttonNode.innerText = 'Save to File';
+    const buttonSaveFileNode = document.createElement('button');
+    buttonSaveFileNode.setAttribute('class', 'button-save');
+    buttonSaveFileNode.innerText = 'Save to File';
 
     const checkNode = document.createElement('input');
     checkNode.setAttribute('class', 'item-check');
     checkNode.setAttribute('type', 'checkbox');
 
     itemNode.appendChild(descriptionNode);
-    itemNode.appendChild(buttonNode);
+    itemNode.appendChild(buttonSaveFileNode);
     itemNode.appendChild(checkNode);
 
     itemList.appendChild(itemNode);
@@ -113,17 +113,17 @@ const render = () => {
     });
 
     itemNode.addEventListener('mouseenter', () => {
-      buttonNode.style.display = 'block';
+      buttonSaveFileNode.style.display = 'block';
     });
 
     itemNode.addEventListener('mouseleave', () => {
-      buttonNode.style.display = 'none';
+      buttonSaveFileNode.style.display = 'none';
     });
 
-    buttonNode.addEventListener('click', e => {
+    buttonSaveFileNode.addEventListener('click', e => {
       e.cancelBubble = true;
 
-      saveToFile(item, buttonNode);
+      saveToFile(item, buttonSaveFileNode);
     });
   });
   renderDelete();
