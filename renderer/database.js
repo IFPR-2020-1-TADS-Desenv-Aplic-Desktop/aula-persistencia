@@ -1,35 +1,34 @@
+const Store = require('electron-store');
+
+const store = new Store({ name: 'data' });
+
 const newObject = description => {
   const id = Math.round(Math.random() * Math.pow(10, 10));
-  return { id, description };
+  return { id, description, createdAt: Date.now() };
 };
 
 exports.save = description => {
-  const data = this.all();
-  data.push(newObject(description));
-
-  localStorage.setItem('data', JSON.stringify(data))
+  const item = newObject(description);
+  store.set(`data.${item.id}`, item);
 
   return this.all();
 };
 
 exports.all = () => {
-  const jsonData = localStorage.data;
-  if (!jsonData) {
-    data = [];
+  const rootObject = store.get('data');
+
+  let data;
+  if (rootObject) {
+    data = Object.values(rootObject).sort((a, b) => a.createdAt - b.createdAt);
   } else {
-    data = JSON.parse(jsonData);
+    data = [];
   }
 
   return data;
 };
 
 exports.delete = id => {
-  const data = this.all();
-
-  const index = data.findIndex(item => item.id == id);
-
-  data.splice(index, 1);
-  localStorage.setItem('data', JSON.stringify(data))
+  store.delete(`data.${id}`);
 
   return this.all();
 };

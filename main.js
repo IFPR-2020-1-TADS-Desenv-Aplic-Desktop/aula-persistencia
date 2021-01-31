@@ -1,5 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { appMenu } = require('./menu');
+const Store = require('electron-store');
+
+Store.initRenderer();
 
 let mainWindow;
 
