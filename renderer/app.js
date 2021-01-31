@@ -84,11 +84,16 @@ const render = () => {
     const descriptionNode = document.createElement('h2');
     descriptionNode.innerText = item.description;
 
+    const buttonNode = document.createElement('button');
+    buttonNode.setAttribute('class', 'button-save');
+    buttonNode.innerText = 'Save to File';
+
     const checkNode = document.createElement('input');
     checkNode.setAttribute('class', 'item-check');
     checkNode.setAttribute('type', 'checkbox');
 
     itemNode.appendChild(descriptionNode);
+    itemNode.appendChild(buttonNode);
     itemNode.appendChild(checkNode);
 
     itemList.appendChild(itemNode);
@@ -104,6 +109,18 @@ const render = () => {
 
     itemNode.addEventListener('click', () => {
       checkNode.click();
+    });
+
+    itemNode.addEventListener('mouseenter', () => {
+      buttonNode.style.display = 'block';
+    });
+
+    itemNode.addEventListener('mouseleave', () => {
+      buttonNode.style.display = 'none';
+    });
+
+    buttonNode.addEventListener('click', e => {
+      e.cancelBubble = true;
     });
   });
   renderDelete();

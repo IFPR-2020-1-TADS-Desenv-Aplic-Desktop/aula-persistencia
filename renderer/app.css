@@ -135,3 +135,18 @@ main {
 .item h2 {
   flex: 1;
 }
+
+.item .button-save {
+  font-size: 90%;
+  display: none;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.item .button-save:hover {
+  background-color:#004d99;
+}
+
+.item .button-save.done {
+  background-color:lightgray;
+}
