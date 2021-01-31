@@ -1,4 +1,6 @@
-const { Menu } = require('electron');
+const { Menu, ipcMain } = require('electron');
+
+let mainMenu;
 
 exports.appMenu = window => {
   // const template = [
@@ -81,6 +83,7 @@ exports.appMenu = window => {
       label: 'File',
       submenu: [
         {
+          id: 'new',
           label: 'Add new Item',
           click: () => {
             window.webContents.send('menu-add-click');
@@ -88,6 +91,7 @@ exports.appMenu = window => {
           accelerator: 'CommandOrControl+N',
         },
         {
+          id: 'delete',
           label: 'Delete Items',
           click: () => {
             window.webContents.send('menu-delete-click');
@@ -99,6 +103,9 @@ exports.appMenu = window => {
     {
       role: 'editMenu',
     },
+    {
+      role: 'toggleDevTools',
+    },
   ];
 
   if (process.platform === 'darwin') {
@@ -107,6 +114,20 @@ exports.appMenu = window => {
     });
   }
 
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
+  this.mainMenu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(this.mainMenu);
 };
+
+const setMenuItemStatus = (id, enable) => {
+  const menuItem = this.mainMenu.getMenuItemById(id);
+  menuItem.enabled = enable;
+};
+
+ipcMain.on('action-enable-menu', (e, config) => {
+  if (config.disable) {
+    config.disable.forEach(id => setMenuItemStatus(id, false));
+  }
+  if (config.enable) {
+    config.enable.forEach(id => setMenuItemStatus(id, true));
+  }
+});

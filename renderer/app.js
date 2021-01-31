@@ -1,5 +1,6 @@
 const { ipcRenderer } = require('electron');
 const database = require('./database');
+const menu = require('./menu');
 
 const modal = document.querySelector('#modal');
 const buttonShowModal = document.querySelector('#button-show-modal');
@@ -15,19 +16,34 @@ const showModal = () => {
   modal.style.display = 'flex';
   clearInput();
   inputDescription.focus();
+  menu.enableMenu({ disable: ['new', 'delete'] });
 };
 
 const hideModal = () => {
   modal.style.display = 'none';
+
+  const menus = ['new'];
+  if (canRemove()) menus.push('delete');
+  menu.enableMenu({ enable: menus });
 };
 
 const clearInput = () => {
   inputDescription.value = '';
 };
 
+const canRemove = () => document.querySelectorAll('.item.selected').length > 0;
+
 const renderDelete = () => {
-  const anySelected = document.querySelectorAll('.item.selected').length > 0;
+  const anySelected = canRemove();
   buttonDelete.style.display = anySelected ? 'block' : 'none';
+
+  let menus;
+  if (canRemove()) {
+    menus = { enable: ['delete'] };
+  } else {
+    menus = { disable: ['delete'] };
+  }
+  menu.enableMenu(menus);
 };
 
 const save = description => {
@@ -106,3 +122,5 @@ ipcRenderer.on('menu-add-click', () => {
 ipcRenderer.on('menu-delete-click', () => {
   remove();
 });
+
+menu.enableMenu({ disable: ['delete'] });

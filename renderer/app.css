@@ -49,6 +49,7 @@ header {
   font-size: 30px;
   font-weight: bold;
   border-radius: 50%;
+  z-index: 0;
 }
 
 #button-delete {
@@ -88,6 +89,7 @@ main {
   align-content: stretch;
   padding: 15px;
   display: none;
+  z-index: 10;
 }
 
 #modal form {
