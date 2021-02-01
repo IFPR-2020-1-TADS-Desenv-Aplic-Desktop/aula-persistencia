@@ -47,9 +47,9 @@ const renderDelete = () => {
   menu.enableMenu(menus);
 };
 
-const save = description => {
+const save = async description => {
   clearInput();
-  database.save(description);
+  await database.save(description);
   hideModal();
   render();
 };
@@ -72,8 +72,8 @@ buttonDelete.addEventListener('click', () => {
   remove();
 });
 
-const render = () => {
-  const items = database.all();
+const render = async () => {
+  const items = await database.all();
   itemList.innerHTML = '';
   noItems.style.display = items.length ? 'none' : 'block';
 
