@@ -1,34 +1,14 @@
-const Store = require('electron-store');
-
-const store = new Store({ name: 'data' });
+const { default: axios } = require('axios');
 
 const newObject = description => {
-  const id = Math.round(Math.random() * Math.pow(10, 10));
-  return { id, description, createdAt: Date.now() };
+  return { description, createdAt: Date.now() };
 };
 
-exports.save = description => {
-  const item = newObject(description);
-  store.set(`data.${item.id}`, item);
+exports.save = async description =>
+  (await axios.post('http://localhost:3000/items', newObject(description)))
+    .data;
 
-  return this.all();
-};
+exports.all = async () => (await axios.get('http://localhost:3000/items')).data;
 
-exports.all = () => {
-  const rootObject = store.get('data');
-
-  let data;
-  if (rootObject) {
-    data = Object.values(rootObject).sort((a, b) => a.createdAt - b.createdAt);
-  } else {
-    data = [];
-  }
-
-  return data;
-};
-
-exports.delete = id => {
-  store.delete(`data.${id}`);
-
-  return this.all();
-};
+exports.delete = async id =>
+  await axios.delete(`http://localhost:3000/items/${id}`);
